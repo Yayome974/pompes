@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Pompes</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculateur de Pompes</h1>
+        <div class="mb-3">
+            <label for="date" class="form-label">Sélectionne une date :</label>
+            <input type="date" id="date" class="form-control">
+        </div>
+        <button class="btn btn-primary w-100" onclick="calculerPompes()">Calculer</button>
+
+        <div class="alert alert-info mt-4" id="resultat" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Remplit automatiquement l'input avec la date d'aujourd'hui
+        document.addEventListener("DOMContentLoaded", () => {
+            const aujourdHui = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = aujourdHui;
+        });
+
+        function calculerPompes() {
+            const dateInput = document.getElementById('date').value;
+            if (!dateInput) {
+                alert("Veuillez sélectionner une date !");
+                return;
+            }
+
+            const dateSelectionnee = new Date(dateInput);
+            const dateDebut = new Date(dateSelectionnee.getFullYear(), 0, 1);
+
+            const joursEcoules = Math.floor((dateSelectionnee - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
+            const nombreTotalPompes = (joursEcoules * (joursEcoules + 1)) / 2;
+
+            const pompesAujourdhui = joursEcoules;
+
+            const resultatElement = document.getElementById('resultat');
+            resultatElement.innerHTML = `
+                <p><strong>Nombre total de pompes :</strong> ${nombreTotalPompes}</p>
+                <p><strong>Nombre de pompes à faire aujourd'hui :</strong> ${pompesAujourdhui}</p>
+            `;
+            resultatElement.style.display = 'block';
+        }
+    </script>
+    <!-- Lien vers Bootstrap JS (optionnel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
