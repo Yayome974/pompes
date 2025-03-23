@@ -31,18 +31,35 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+        .progress {
+            height: 25px;
+        }
+        .progress-bar {
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Calculateur de Pompes</h1>
+
         <div class="mb-3">
             <label for="date" class="form-label">Sélectionne une date :</label>
             <input type="date" id="date" class="form-control">
         </div>
+
         <button class="btn btn-primary w-100" onclick="calculerPompes()">Calculer</button>
 
+        <!-- Affichage des résultats et progression -->
         <div class="alert alert-info mt-4" id="resultat" style="display: none;"></div>
+
+        <div id="progression-container" class="mt-4" style="display: none;">
+            <p><strong>Progression de l'année :</strong></p>
+            <p><strong>Progression : </strong><span id="pourcentageProgression">0%</span></p>
+            <div class="progress">
+                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -60,21 +77,53 @@
             }
 
             const dateSelectionnee = new Date(dateInput);
-            const dateDebut = new Date(dateSelectionnee.getFullYear(), 0, 1);
+            const dateDebut = new Date(dateSelectionnee.getFullYear(), 0, 1);  // 1er janvier de l'année sélectionnée
 
-            const joursEcoules = Math.floor((dateSelectionnee - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
+            const joursEcoules = Math.floor((dateSelectionnee - dateDebut) / (1000 * 60 * 60 * 24)) + 1;  // +1 pour inclure le jour sélectionné
             const nombreTotalPompes = (joursEcoules * (joursEcoules + 1)) / 2;
-
             const pompesAujourdhui = joursEcoules;
 
+            // Affichage des résultats des pompes
             const resultatElement = document.getElementById('resultat');
             resultatElement.innerHTML = `
                 <p><strong>Nombre total de pompes :</strong> ${nombreTotalPompes}</p>
                 <p><strong>Nombre de pompes à faire aujourd'hui :</strong> ${pompesAujourdhui}</p>
             `;
             resultatElement.style.display = 'block';
+
+            // Calcul de la progression
+            calculerProgression();
+        }
+
+        function calculerProgression() {
+            // Date actuelle
+            const aujourdHui = new Date();
+
+            // Définir le début de l'année (1er janvier de l'année en cours)
+            const debutAnnee = new Date(aujourdHui.getFullYear(), 0, 1);
+
+            // Calcul du nombre de jours écoulés depuis le début de l'année
+            const joursEcoules = Math.floor((aujourdHui - debutAnnee) / (1000 * 60 * 60 * 24)) + 1;  // +1 pour inclure aujourd'hui
+
+            // Le nombre total de jours dans l'année (365 ou 366 selon l'année bissextile)
+            const joursDansAnnee = (aujourdHui.getFullYear() % 4 === 0 && (aujourdHui.getFullYear() % 100 !== 0 || aujourdHui.getFullYear() % 400 === 0)) ? 366 : 365;
+
+            // Calcul du pourcentage de progression
+            const pourcentageProgression = Math.min(100, (joursEcoules / joursDansAnnee) * 100);
+
+            // Mise à jour de la barre de progression
+            const pourcentageElement = document.getElementById('pourcentageProgression');
+            const progressBar = document.getElementById('progressBar');
+            pourcentageElement.innerText = `${Math.round(pourcentageProgression)}%`;
+            progressBar.style.width = `${pourcentageProgression}%`;
+            progressBar.innerText = `${Math.round(pourcentageProgression)}%`;
+
+            // Affichage de la section de progression
+            const progressionContainer = document.getElementById('progression-container');
+            progressionContainer.style.display = 'block';
         }
     </script>
+
     <!-- Lien vers Bootstrap JS (optionnel) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
