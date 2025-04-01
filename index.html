@@ -18,9 +18,26 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .container2 {
+            margin: 50px auto; /* Centrer horizontalement */
+        max-width: 500px;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+            
+        }
         h1 {
             text-align: center;
             color: #007bff;
+        }
+        .contenue {
+            text-align: center;
+        }
+        .seancedujour {
+            margin-top: 20px;
+            font-size: 23px;
         }
         .btn-primary2 {
             background-color: #ffffff;
@@ -73,6 +90,11 @@
         </div>
 
 
+    </div>
+    <div class="container2">
+        <h1>Séance de sport</h1>
+<p id="seance" class="seance"></p>
+        <p id="contenue" class="contenue"></p>
     </div>
 
     <script>
@@ -162,6 +184,95 @@
             
             document.getElementById('progression-container').style.display = 'block';
         }
+        document.getElementById("seance").textContent = "chargement...";
+        const jours = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+        const aujourdHui = jours[new Date().getDay()];
+        document.getElementById("seance").textContent = "Aujourd'hui, nous sommes " + aujourdHui + "."
+        const seance = {
+            "lundi": {
+                titre: "repos",
+                description: "pas de séance Aujourd'hui",
+                exercices: ["❌"]
+                },            
+            "mardi": {
+                titre: "Poitrine & Triceps",
+                description: "Renforcement des biceps et triceps",
+                exercices: [
+                    { nom: "Pompes classiques 3 × 15" },
+                    { nom: "Pompes diamant (triceps) 3 × 12" },
+                    { nom: "Pompes bras écarté  3 × 12" },
+                    { nom: "Écarté couché haltères 3 × 12" },
+                    { nom: "Dips sur chaise 3 × 15" }
+        ]
+    },
+
+            "mercredi": {
+                titre: "Dos & Biceps",
+                description: "Renforcement du Dos et des Biceps ",
+                exercices: [
+                    {nom : "Rowing haltères – 3 × 12 (chaque bras)"},
+                    {nom : "Tirage haltères à un bras – 3 × 12"},
+                    {nom : "Biceps curl haltères – 3 × 12"},
+                    {nom : "Hammer curl haltères – 3 × 12"},
+                    {nom : "Superman hold (gainage lombaire) – 3 × 30 sec"},
+
+                ]
+                }, 
+            "jeudi": {
+                titre: "Jambes & Fessiers",
+                description: "Renforcement des jambes et des fessiers",
+                video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
+                exercices: [
+                    {nom : "Squats haltères – 3 × 15"},
+                    {nom : "Fentes avant avec haltères – 3 × 12 (chaque jambe)"},
+                    {nom : "Soulevé de terre jambes tendues haltères – 3 × 12"},
+                    {nom : "Hip thrust sur chaise – 3 × 15"},
+                    {nom : "Mollets debout (élevés sur pointe) – 3 × 15"},
+                    
+                ]
+                }, 
+            "vendredi": {
+                titre: "repos",
+                description: "pas de séance Aujourd'hui",
+                exercices: ["❌"]
+                }, 
+            "samedi": {
+                titre: " Épaules & Trapèzes",
+                description: "musculation des épaules",
+                exercices: [
+                    {nom : "Mollets debout (élevés sur pointe) – 3 × 15"},
+                    {nom : "Élévations latérales haltères – 3 × 12"},
+                    {nom : "Oiseau haltères (arrière des épaules) – 3 × 12"},
+                    {nom : "Shrugs haltères (trapèzes) – 3 × 15"},
+                    {nom : "Gainage planche – 3 × 30 sec5"},
+                ]
+                }, 
+            "dimanche": {
+                titre: "Abdos & Gainage",
+                description: "renforcement des abdos et gainage",
+                video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
+                exercices: [
+                { nom: "Crunchs classiques – 3 × 15", url: "https://example.com/crunchs" },
+                { nom: "Relevés de jambes – 3 × 12", url: "https://example.com/releves" },
+                { nom: "Russian twists haltères – 3 × 20 (10 de chaque côté)", url: "https://example.com/twists" },
+                { nom: "Planche latérale – 3 × 30 sec (chaque côté)", url: "https://example.com/planche" },
+                { nom: "Mountain climbers – 3 × 20", url: "https://example.com/mountain" },
+                ]
+                }, 
+        };
+        const seanceDuJour = seance[aujourdHui];
+
+        document.getElementById("seance").innerHTML = `
+        <h3 class="seancedujour">${seanceDuJour.titre} :</h3>
+        <p>${seanceDuJour.description} </p>
+        <ul>
+            ${seanceDuJour.exercices.map(itml => `<li><a href="${itml.url}" target="blank"> ${itml.nom}</a></li>`).join("")}
+        </ul>
+    `;
+
+if (seanceDuJour.nom === "Crunchs classiques – 3 × 15")
+    var e = document.getElementById('seance');
+    e.style.color = 'black';
     </script>
 </body>
 </html>
