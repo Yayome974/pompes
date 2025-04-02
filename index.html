@@ -60,6 +60,55 @@
         .form-label2 {
             margin-top: 24px;
         }
+
+.exercices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.exercice-box {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+
+}
+.exercice-box {
+    background: #adadad17;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 330ms  ease-out, box-shadow 330ms ease-out;
+}
+
+.exercice-box:hover {
+    transform: scale(1.05);  /* Agrandissement fluide de l'élément */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);  /* Augmenter l'ombre pour un effet plus marqué */
+}
+
+/* Optionnel : Animation à l'entrée */
+.exercice-box {
+    transition: transform 330ms ease-out, box-shadow 330ms ease-out, padding 330ms ease-out;
+}
+
+
+
+
+
+
+.exercice-box a {
+    text-decoration: none;
+}
+
     </style>
 </head>
 <body>
@@ -192,29 +241,33 @@
             "lundi": {
                 titre: "repos",
                 description: "pas de séance Aujourd'hui",
+                time: "Aucun temps",
                 exercices: ["❌"]
                 },            
             "mardi": {
                 titre: "Poitrine & Triceps",
                 description: "Renforcement des biceps et triceps",
+                time: "⌛20 minutes⌛",
                 exercices: [
-                    { nom: "Pompes classiques 3 × 15" },
+                    { nom: "Pompes classiques", repetition: " 3 × 15 "},
                     { nom: "Pompes diamant (triceps) 3 × 12" },
                     { nom: "Pompes bras écarté  3 × 12" },
                     { nom: "Écarté couché haltères 3 × 12" },
                     { nom: "Dips sur chaise 3 × 15" }
         ]
+        
     },
 
             "mercredi": {
                 titre: "Dos & Biceps",
                 description: "Renforcement du Dos et des Biceps ",
+                time: "⌛25 minutes⌛",
                 exercices: [
-                    {nom : "Rowing haltères – 3 × 12 (chaque bras)"},
-                    {nom : "Tirage haltères à un bras – 3 × 12"},
-                    {nom : "Biceps curl haltères – 3 × 12"},
-                    {nom : "Hammer curl haltères – 3 × 12"},
-                    {nom : "Superman hold (gainage lombaire) – 3 × 30 sec"},
+                    {nom : "Rowing haltères ", repetition:" 3 × 12"},
+                    {nom : "Tirage haltères à un bras", repetition:" 3 × 12"},
+                    {nom : "Biceps curl haltères", repetition:" 3 × 12"},
+                    {nom : "Hammer curl haltères", repetition:" 3 × 12"},
+                    {nom : "Superman hold (gainage lombaire)", repetition:" 3 × 30 sec"},
 
                 ]
                 }, 
@@ -258,17 +311,24 @@
                 { nom: "Planche latérale – 3 × 30 sec (chaque côté)", url: "https://example.com/planche" },
                 { nom: "Mountain climbers – 3 × 20", url: "https://example.com/mountain" },
                 ]
+
                 }, 
         };
         const seanceDuJour = seance[aujourdHui];
 
         document.getElementById("seance").innerHTML = `
-        <h3 class="seancedujour">${seanceDuJour.titre} :</h3>
-        <p>${seanceDuJour.description} </p>
-        <ul>
-            ${seanceDuJour.exercices.map(itml => `<li><a href="${itml.url}" target="blank"> ${itml.nom}</a></li>`).join("")}
-        </ul>
-    `;
+    <h3 class="seancedujour">${seanceDuJour.titre} :</h3>
+    <p>${seanceDuJour.time}</p>
+    <p>${seanceDuJour.description}</p>
+<div class="exercices-container">
+    ${Array.isArray(seanceDuJour.exercices) ? seanceDuJour.exercices.map(itml => 
+    `<div class="exercice-box">
+        <input type="checkbox">
+        <a href="${itml.url}" target="_blank">   ${itml.nom} <br> ${itml.repetition}</a>
+     </div>`
+    ).join("") : "<p>Aucun exercice aujourd'hui</p>"}
+</div>
+`;
 
 if (seanceDuJour.nom === "Crunchs classiques – 3 × 15")
     var e = document.getElementById('seance');
