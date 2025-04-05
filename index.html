@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculateur de Pompes</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #f0f8ff;
@@ -19,7 +23,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .container2 {
-            margin: 50px auto; /* Centrer horizontalement */
+        margin: 50px auto; /* Centrer horizontalement */
         max-width: 500px;
         background: white;
         padding: 30px;
@@ -28,6 +32,43 @@
         position: relative;
             
         }
+        .container3 {
+            margin: 50px auto; /* Centrer horizontalement */
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+
+            
+        }
+        .tablink {
+      background-color: #f1f1f1;
+      border: none;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-size: 17px;
+      display: inline-block;
+    }
+
+    .tablink:hover {
+      background-color: #ddd;
+    }
+
+    /* Contenu des onglets */
+    .tabcontent {
+      display: none;
+      padding: 20px;
+      border-top: none;
+      margin-top: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .active {
+      background-color: #ccc;
+    }
+
         h1 {
             text-align: center;
             color: #007bff;
@@ -60,7 +101,21 @@
         .form-label2 {
             margin-top: 24px;
         }
+a {
+    
 
+    font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+
+}
+.progress2 {
+            height: 25px;
+        }
+        .progress-bar2 {
+            font-size: 1rem;
+        }
 .exercices-container {
     display: flex;
     flex-direction: column;
@@ -101,6 +156,11 @@
 }
 
 
+input[type="checkbox"] {
+    transform: scale(1.5); /* Agrandit la case à cocher de 1.5x */
+    margin: 10px; /* Un petit espace autour */
+    border-radius: 2000px;
+}
 
 
 
@@ -112,41 +172,126 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Calculateur de Pompes</h1>
-
-        <div class="mb-3">
-            <label for="date" class="form-label">Sélectionne une date :</label>
-            <input type="date" id="date" class="form-control">
-        </div>
-
-        <button class="btn btn-primary w-100" onclick="calculerPompes()">Calculer</button>
-        <div class="mb-3">
-            <label for="nombreInput" class="form-label2">A-tu manqué des jours ?</label>
-            <input type="number" id="nombreInput" class="form-control" min="0">
-        </div>
-        <button class="btn btn-primary2 w-100" onclick="calculerPompesmanque()">Validé mes jours manqué ✅</button>
 
 
-        <div class="alert alert-info mt-4" id="resultat" style="display: none;"></div>
-
-        <div id="progression-container" class="mt-4" style="display: none;">
-            <p><strong>Progression de l'année :</strong></p>
-            <p><strong>Progression :</strong> <span id="pourcentageProgression">0%</span></p>
-            <div class="progress">
-                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-            </div>
-        </div>
 
 
+    <div class="tabs">
+        <button class="tablink" onclick="openTab(event, 'Programme')">Programme</button>
+        <button class="tablink" onclick="openTab(event, 'Avancee')">Avancée</button>
+      </div>
+    
+      <!-- Contenu des onglets -->
+
+<!-- Contenu toujours affiché -->
+<div class="container">
+    <h1>Calculateur de Pompes</h1>
+
+    <div class="mb-3">
+        <label for="date" class="form-label">Sélectionne une date :</label>
+        <input type="date" id="date" class="form-control">
     </div>
+
+    <button class="btn btn-primary w-100" onclick="calculerPompes()">Calculer</button>
+
+    <div class="mb-3">
+        <label for="nombreInput" class="form-label2">As-tu manqué des jours ?</label>
+        <input type="number" id="nombreInput" class="form-control" min="0">
+    </div>
+
+    <button class="btn btn-primary2 w-100" onclick="calculerPompesmanque()">Valider mes jours manqués ✅</button>
+
+    <div class="alert alert-info mt-4" id="resultat" style="display: none;"></div>
+
+    <div id="progression-container" class="mt-4" style="display: none;">
+        <p><strong>Progression de l'année :</strong></p>
+        <p><strong>Progression :</strong> <span id="pourcentageProgression">0%</span></p>
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Contenus variables -->
+
+<div id="Programme" class="tabcontent" style="display:none;">
+
     <div class="container2">
         <h1>Séance de sport</h1>
-<p id="seance" class="seance"></p>
+        <div id="progression-container2" class="mt-4" style="display: none;"></div>
+        <p id="seance" class="seance"></p>
         <p id="contenue" class="contenue"></p>
     </div>
+</div>
+<div id="Avancee" class="tabcontent" >
+    <div class="container3">
+        <div class="time" id="timeDisplay">00:00</div>
+        <div class="buttons">
+            <button id="startStopButton">Démarrer</button>
+            <button id="resetButton">Réinitialiser</button>
+        </div>
+    </div>
+</div>
 
-    <script>
+<div id="AUTRE" class="tabcontent" >
+    <div class="container3">
+        <h1>Séance de sport</h1>
+        <div id="progression-container3" class="mt-4" style="display: none;"></div>
+
+    </div>
+</div>
+<Script>
+    let timer;
+let isRunning = false;
+let seconds = 0;
+let minutes = 0;
+
+const timeDisplay = document.getElementById('timeDisplay');
+const startStopButton = document.getElementById('startStopButton');
+const resetButton = document.getElementById('resetButton');
+
+startStopButton.addEventListener('click', function() {
+    if (isRunning) {
+        clearInterval(timer);
+        startStopButton.textContent = 'Démarrer';
+    } else {
+        timer = setInterval(function() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+            timeDisplay.textContent = formatTime(minutes, seconds);
+        }, 1000);
+        startStopButton.textContent = 'Arrêter';
+    }
+    isRunning = !isRunning;
+});
+
+
+
+</Script>
+      <script>
+
+function openTab(evt, tabName) {
+    var i, tabcontent, tablink;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++){
+        tabcontent[i].style.display = "none";
+    }
+    tablink = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablink.length; i++){
+        tablink[i].classList.remove("active")
+    }
+    document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.classList.add("active");
+    }
+document.getElementsByClassName("tablink")[0].click()
+
+    
         document.addEventListener("DOMContentLoaded", () => {
             const aujourdHui = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = aujourdHui;
@@ -274,20 +419,26 @@
             "jeudi": {
                 titre: "Jambes & Fessiers",
                 description: "Renforcement des jambes et des fessiers",
+                time: "⌛25 minutes⌛",
                 video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
                 exercices: [
-                    {nom : "Squats haltères – 3 × 15"},
-                    {nom : "Fentes avant avec haltères – 3 × 12 (chaque jambe)"},
-                    {nom : "Soulevé de terre jambes tendues haltères – 3 × 12"},
-                    {nom : "Chaise contre mure - 3 * 30sec"},
-                    {nom : "Mollets debout (élevés sur pointe) – 3 × 15"},
+                    {nom : "Squats haltères", repetition:"3 × 15"},
+                    {nom : "Fentes avant avec haltères", repetition:"3 × 12 (chaque jambe)"},
+                    {nom : "Soulevé de terre jambes tendues haltères", repetition:" 3 × 12"},
+                    {nom : "Hip thrust sur chaise", repetition:" 3 × 15"},
+                    {nom : "Mollets debout (élevés sur pointe)", repetition:"3 × 15"},
                     
                 ]
                 }, 
             "vendredi": {
-                titre: "repos",
-                description: "pas de séance Aujourd'hui",
-                exercices: ["❌"]
+                titre: "Repos",
+                description: "❌",
+                time: "Aucun",
+                video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
+                exercices: [
+                {nom : "Aucun exerices Aujourd'hui", repetition:"❌"},
+                    
+                ]
                 }, 
             "samedi": {
                 titre: " Épaules & Trapèzes",
@@ -323,13 +474,29 @@
 <div class="exercices-container">
     ${Array.isArray(seanceDuJour.exercices) ? seanceDuJour.exercices.map(itml => 
     `<div class="exercice-box">
-        <input type="checkbox">
-        <a href="${itml.url}" target="_blank">   ${itml.nom} <br> ${itml.repetition}</a>
+                <input class="form-check-input" type="checkbox" id="check1">
+
+        <a href="${itml.url}" target="_blank">${itml.nom} <br> <b>${itml.repetition}</b></a>
      </div>`
     ).join("") : "<p>Aucun exercice aujourd'hui</p>"}
 </div>
-`;
 
+`;
+ 
+const checkboxes = document.getElementById('check1');
+  const progressBar = document.getElementById('progress-bar2');
+
+  function updateProgress() {
+    const total = checkboxes.length;
+    const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+    const percentage = (checked / total) * 100;
+    progressBar.style.width = percentage + '%';
+  }
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', updateProgress);
+  });
+      
 if (seanceDuJour.nom === "Crunchs classiques – 3 × 15")
     var e = document.getElementById('seance');
     e.style.color = 'black';
