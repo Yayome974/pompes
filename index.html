@@ -17,10 +17,9 @@
         .container {
             margin-top: 50px;
             max-width: 500px;
-            background: white;
+            background: rgba(255, 255, 255, 0);
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .container2 {
         margin: 50px auto; /* Centrer horizontalement */
@@ -110,6 +109,18 @@ a {
   font-style: normal;
 
 }
+
+.buttontime {
+font-size: 16px;
+  padding: 5px 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4c82af;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 .progress2 {
             height: 25px;
         }
@@ -133,6 +144,13 @@ a {
     gap: 10px;
 
 
+}
+.souscontainer {
+    margin-top: 50px;
+    max-width: 500px;
+    background: rgb(255, 0, 0);
+    padding: 30px;
+    border-radius: 8px;
 }
 .exercice-box {
     background: #adadad17;
@@ -169,6 +187,10 @@ input[type="checkbox"] {
     text-decoration: none;
 }
 
+.horloge {
+    width: 20px;
+}
+
     </style>
 </head>
 <body>
@@ -186,7 +208,7 @@ input[type="checkbox"] {
 <!-- Contenu toujours affiché -->
 <div class="container">
     <h1>Calculateur de Pompes</h1>
-
+<br>
     <div class="mb-3">
         <label for="date" class="form-label">Sélectionne une date :</label>
         <input type="date" id="date" class="form-control">
@@ -243,7 +265,7 @@ input[type="checkbox"] {
     </div>
 </div>
 <Script>
-    let timer;
+let timer;
 let isRunning = false;
 let seconds = 0;
 let minutes = 0;
@@ -269,11 +291,25 @@ startStopButton.addEventListener('click', function() {
     }
     isRunning = !isRunning;
 });
+resetButton.addEventListener('click', function(){
+    clearInterval(timer);
+    minutes = 0;
+    seconds = 0;
+    timeDisplay.textContent = formatTime(minutes, seconds);
+    startStopButton.textContent = 'Démarrer'
+});
+function formatTime(min, sec) {
+    return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
 
 
 
 </Script>
+
       <script>
+
+
 
 function openTab(evt, tabName) {
     var i, tabcontent, tablink;
@@ -329,9 +365,12 @@ document.getElementsByClassName("tablink")[0].click()
 
             const resultatElement = document.getElementById('resultat');
             resultatElement.innerHTML = `
-                <p><strong>Nombre total de pompes :</strong> ${nombreTotalPompes}</p>
+                <div class="souscontainer">
+                <p><strong>Nombre total de pompes :</strong> ${nombreTotalPompes}</p><div>
+
                 <p><strong>Pompes à faire aujourd'hui :</strong> ${pompesAujourdhui}</p>
                 <p><strong>Série recommandée :</strong> 5 séries de ${serieRecommande} pompes</p>
+                
             `;
             resultatElement.style.display = 'block';
 
@@ -405,7 +444,7 @@ document.getElementsByClassName("tablink")[0].click()
 
             "mercredi": {
                 titre: "Dos & Biceps",
-                description: "Renforcement du Dos et des Biceps ",
+
                 time: "⌛25 minutes⌛",
                 exercices: [
                     {nom : "Rowing haltères ", repetition:" 3 × 12"},
@@ -418,7 +457,7 @@ document.getElementsByClassName("tablink")[0].click()
                 }, 
             "jeudi": {
                 titre: "Jambes & Fessiers",
-                description: "Renforcement des jambes et des fessiers",
+
                 time: "⌛25 minutes⌛",
                 video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
                 exercices: [
@@ -432,7 +471,7 @@ document.getElementsByClassName("tablink")[0].click()
                 }, 
             "vendredi": {
                 titre: "Repos",
-                description: "❌",
+
                 time: "Aucun",
                 video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
                 exercices: [
@@ -440,66 +479,79 @@ document.getElementsByClassName("tablink")[0].click()
                     
                 ]
                 }, 
-            "samedi": {
-                titre: " Épaules & Trapèzes",
-                description: "musculation des épaules",
-                exercices: [
-                    {nom : "Mollets debout (élevés sur pointe) – 3 × 15"},
-                    {nom : "Élévations latérales haltères – 3 × 12"},
-                    {nom : "Oiseau haltères (arrière des épaules) – 3 × 12"},
-                    {nom : "Shrugs haltères (trapèzes) – 3 × 15"},
-                    {nom : "Gainage planche – 3 × 30 sec5"},
-                ]
-                }, 
-            "dimanche": {
-                titre: "Abdos & Gainage",
-                description: "renforcement des abdos et gainage",
-                video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
-                exercices: [
-                { nom: "Crunchs classiques – 3 × 15", url: "https://example.com/crunchs" },
-                { nom: "Relevés de jambes – 3 × 12", url: "https://example.com/releves" },
-                { nom: "Russian twists haltères – 3 × 20 (10 de chaque côté)", url: "https://example.com/twists" },
-                { nom: "Planche latérale – 3 × 30 sec (chaque côté)", url: "https://example.com/planche" },
-                { nom: "Mountain climbers – 3 × 20", url: "https://example.com/mountain" },
-                ]
+    "samedi": {
+        titre: "Épaules & Trapèzes",
 
-                }, 
-        };
-        const seanceDuJour = seance[aujourdHui];
+        time: "⌛10 minutes⌛",
+        exercices: [
+            { nom: "Mollets debout (élevés sur pointe)", repetition: "3 × 15" },
+            { nom: "Élévations latérales haltères", repetition: "3 × 12" },
+            { nom: "Oiseau haltères (arrière des épaules)", repetition: "3 × 12" },
+            { nom: "Shrugs haltères (trapèzes)", repetition: "3 × 15" },
+            { nom: "Gainage planche", repetition: "3 × 30 sec", button: "Timer" },
+        ]
+    },
+    "dimanche": {
+        titre: "Abdos & Gainage",
+        video: "https://www.youtube.com/watch?v=2z8JmcrWAs0",
+        exercices: [
+            { nom: "Crunchs classiques – 3 × 15", url: "https://example.com/crunchs" },
+            { nom: "Relevés de jambes – 3 × 12", url: "https://example.com/releves" },
+            { nom: "Russian twists haltères – 3 × 20 (10 de chaque côté)", url: "https://example.com/twists" },
+            { nom: "Planche latérale – 3 × 30 sec (chaque côté)", url: "https://example.com/planche" },
+            { nom: "Mountain climbers – 3 × 20", url: "https://example.com/mountain" },
+        ]
+    },
+};
 
-        document.getElementById("seance").innerHTML = `
-    <h3 class="seancedujour">${seanceDuJour.titre} :</h3>
+
+const seanceDuJour = seance[aujourdHui];
+
+document.getElementById("seance").innerHTML = `
+    <br><h3 class="seancedujour">${seanceDuJour.titre} :</h3>
+    <br>
     <p>${seanceDuJour.time}</p>
-    <p>${seanceDuJour.description}</p>
-<div class="exercices-container">
-    ${Array.isArray(seanceDuJour.exercices) ? seanceDuJour.exercices.map(itml => 
-    `<div class="exercice-box">
+
+    <div class="exercices-container">
+        ${Array.isArray(seanceDuJour.exercices) ? seanceDuJour.exercices.map(itml => 
+            `<div class="exercice-box">
                 <input class="form-check-input" type="checkbox" id="check1">
-
-        <a href="${itml.url}" target="_blank">${itml.nom} <br> <b>${itml.repetition}</b></a>
-     </div>`
-    ).join("") : "<p>Aucun exercice aujourd'hui</p>"}
-</div>
-
+                <a href="${itml.url || '#'}" target="_blank">${itml.nom} <br> <b>${itml.repetition}</b></a>
+                ${itml.button ? `<button  class="buttontime" onclick="openTab(event, 'Avancee')">${itml.button}  <img src="horloge.png" class="horloge"></button>` : ''}
+            </div>`
+        ).join("") : "<p>Aucun exercice aujourd'hui</p>"}
+    </div>
 `;
+
+
+
+
  
-const checkboxes = document.getElementById('check1');
-  const progressBar = document.getElementById('progress-bar2');
 
-  function updateProgress() {
-    const total = checkboxes.length;
-    const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
-    const percentage = (checked / total) * 100;
-    progressBar.style.width = percentage + '%';
-  }
+document.addEventListener("DOMContentLoaded", function () {
+    const checkboxes = document.querySelectorAll(".form-check-input");
 
-  checkboxes.forEach(cb => {
-    cb.addEventListener('change', updateProgress);
-  });
-      
-if (seanceDuJour.nom === "Crunchs classiques – 3 × 15")
-    var e = document.getElementById('seance');
-    e.style.color = 'black';
-    </script>
+    checkboxes.forEach((checkbox, index) => {
+        const key = `checkbox_${index}`;
+        
+        // Charger l'état depuis le localStorage
+        const saved = localStorage.getItem(key);
+        checkbox.checked = saved === "true";
+
+        // Sauvegarder quand on clique
+        checkbox.addEventListener("change", () => {
+            localStorage.setItem(key, checkbox.checked);
+            updateProgress();
+        });
+    });
+
+
+});
+
+
+    
+
+</script>
+
 </body>
 </html>
